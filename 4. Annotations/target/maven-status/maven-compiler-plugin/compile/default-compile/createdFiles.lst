@@ -1,0 +1,5 @@
+ru\kpfu\annotations\HtmlInput.class
+META-INF\services\javax.annotation.processing.Processor
+ru\kpfu\annotations\HtmlProcessor.class
+ru\kpfu\annotations\User.class
+ru\kpfu\annotations\HtmlForm.class

@@ -1,0 +1,20 @@
+PUT http://localhost/tests/1/pass
+Content-Type: application/json
+###
+PUT http://localhost/articles/4/rate
+Content-Type: application/json
+###
+PUT http://localhost/students/7/verify
+Content-Type: application/json
+###
+GET http://localhost/students/7
+###
+POST http://localhost/articles
+Content-Type: application/json
+
+{
+"title":"eeeeeeeee",
+"text":"rock"
+}
+###
+GET http://localhost/articles/

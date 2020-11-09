@@ -1,0 +1,71 @@
+== Тестирование ==
+
+== Методы
+
+|===
+| URI |Метод | Назначение
+| `/tests/{test-id}/pass`
+| `PUT`
+| Пройти тест и обновить рейтинг студента
+|===
+
+=== Прохождение теста
+
+Можно пройти тест изменив рейтинг студента
+
+.request
+include::{snippets}\pass_test\http-request.adoc[]
+
+.response
+include::{snippets}\pass_test\http-response.adoc[]
+
+.response-fields
+include::{snippets}\pass_test\response-fields.adoc[]
+
+== Посты ==
+
+== Методы
+
+|===
+| URI | Метод | Назначение
+| `/articles/{article-id}/rate`
+| `PUT`
+| Оценить пост
+|===
+
+=== Оценка поста
+
+Можно оценить пост
+
+.request
+include::{snippets}\article_rate\http-request.adoc[]
+
+.response
+include::{snippets}\article_rate\http-response.adoc[]
+
+.response-fields
+include::{snippets}\article_rate\response-fields.adoc[]
+
+== Студенты ==
+
+== Методы
+
+|===
+| URI |Метод | Назначение
+| `/students/{student-id}/verify`
+| `PUT`
+| Верифицировать студента
+|===
+
+=== Верификация
+
+Можно пройти верификацию
+
+.request
+include::{snippets}\student_verify\http-request.adoc[]
+
+.response
+include::{snippets}\student_verify\http-response.adoc[]
+
+.response-fields
+include::{snippets}\student_verify\response-fields.adoc[]
