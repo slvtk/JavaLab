@@ -1,0 +1,34 @@
+use education
+db.courses.insert(
+    {
+        "active": true,
+        "description": "lorem",
+        "title": "lorem",
+        "hours": 2,
+        "studentsCount": 2
+    })
+db.users.insert(
+    [
+        {
+            "age": 20,
+            "name": "Salavat",
+            "surname": "Nizamov",
+            "skills": ["Go", "C++", "pundit"]
+        }
+    ]
+    )
+db.courses.update(
+    {
+        _id: ObjectId("5fa95debc142b87d1ee96871")
+    },
+    {
+        $set:
+            {
+                students:
+                    [
+                        ObjectId("5fa95ad947d44f512bd0454d"),
+                        ObjectId("5fa97813c142b87d1ee96878")
+                    ]
+            }
+    }
+    )
