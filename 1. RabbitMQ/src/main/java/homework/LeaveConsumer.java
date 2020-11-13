@@ -1,5 +1,6 @@
 package homework;
 
+import com.google.gson.Gson;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -30,19 +31,12 @@ public class LeaveConsumer {
             channel.queueBind(LEAVE_QUEUE, EXCHANGE_NAME, "");
             channel.basicQos(3);
             channel.basicConsume(LEAVE_QUEUE, true, (consumerTag, message) -> {
-                String DEST = "results/leave/"+UUID.randomUUID().toString()+".pdf";
-                String userStr = new String(message.getBody());
-                File file = new File(DEST);
-                file.getParentFile().mkdirs();
-                System.out.println("Распечатал "+userStr + " "+ DEST);
-                FileOutputStream fos = new FileOutputStream(DEST);
-                PdfWriter writer = new PdfWriter(fos);
-                PdfDocument pdf = new PdfDocument(writer);
-                Document document = new Document(pdf);
-                document.add(new Paragraph("APPLICATION FOR LEAVE"));
-                document.add(new Paragraph(userStr));
-                document.close();
-            }, consumerTag -> {});
+                Application leave = new Application(UUID.randomUUID().toString(), "Увольнение");
+                Gson json = new Gson();
+                User user = json.fromJson(new String(message.getBody()), User.class);
+                PdfGenerator.generatePdf(user, leave);
+            }, consumerTag -> {
+            });
         } catch (IOException | TimeoutException e) {
             throw new IllegalArgumentException(e);
         }

@@ -1,5 +1,6 @@
 package homework;
 
+import com.google.gson.Gson;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -25,11 +26,12 @@ public class DocumentProducer {
             // создаем exchange
             channel.exchangeDeclare(EXCHANGE_NAME, EXCHANGE_TYPE);
 
-            User user1 = new User("Ivan","Ivanov",123123,12,666);
-            User user2 = new User("Sergey","Sergeev",123123,12,666);
+            User user1 = new User("Ivan","Ivanov",12);
+            User user2 = new User( "Sergey","Sergeev",123123);
+            Gson json = new Gson();
+            channel.basicPublish(EXCHANGE_NAME, "", null, json.toJson(user1).getBytes());
+            channel.basicPublish(EXCHANGE_NAME, "", null, json.toJson(user2).getBytes());
 
-            channel.basicPublish(EXCHANGE_NAME, "", null, user1.toString().getBytes());
-            channel.basicPublish(EXCHANGE_NAME, "", null, user2.toString().getBytes());
         } catch (IOException | TimeoutException e) {
            throw new IllegalArgumentException(e);
         }
