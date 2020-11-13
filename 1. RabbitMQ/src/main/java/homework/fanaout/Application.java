@@ -1,4 +1,4 @@
-package homework;
+package homework.fanaout;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package homework;
+package homework.fanaout;
 
 import com.google.gson.Gson;
 import com.rabbitmq.client.Channel;
@@ -6,34 +6,32 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
+import java.util.UUID;
 import java.util.concurrent.TimeoutException;
 
-public class DocumentProducer {
-    // есть EXCHANGE - images НЕ ОЧЕРЕДЬ
+public class HolidayConsumer {
     private final static String EXCHANGE_NAME = "documents";
-    // тип FANOUT
     private final static String EXCHANGE_TYPE = "fanout";
+    private final static String HOLIDAY_QUEUE = "holiday_queue";
 
     public static void main(String[] args) {
-
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost("localhost");
 
         try {
-
             Connection connection = connectionFactory.newConnection();
             Channel channel = connection.createChannel();
-            // создаем exchange
             channel.exchangeDeclare(EXCHANGE_NAME, EXCHANGE_TYPE);
-
-            User user1 = new User("Ivan","Ivanov",12);
-            User user2 = new User( "Sergey","Sergeev",123123);
-            Gson json = new Gson();
-            channel.basicPublish(EXCHANGE_NAME, "", null, json.toJson(user1).getBytes());
-            channel.basicPublish(EXCHANGE_NAME, "", null, json.toJson(user2).getBytes());
-
+            channel.queueBind(HOLIDAY_QUEUE, EXCHANGE_NAME, "");
+            channel.basicQos(3);
+            channel.basicConsume(HOLIDAY_QUEUE, true, (consumerTag, message) -> {
+                Application holiday = new Application(UUID.randomUUID().toString(),"Отпуск");
+                Gson json = new Gson();
+                User user = json.fromJson(new String(message.getBody()),User.class);
+                PdfGenerator.generatePdf(user,holiday);
+            }, consumerTag -> {});
         } catch (IOException | TimeoutException e) {
-           throw new IllegalArgumentException(e);
+            throw new IllegalArgumentException(e);
         }
     }
 }
