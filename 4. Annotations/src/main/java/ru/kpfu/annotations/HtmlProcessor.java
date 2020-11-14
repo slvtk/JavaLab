@@ -1,6 +1,9 @@
 package ru.kpfu.annotations;
 
 import com.google.auto.service.AutoService;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Processor;
@@ -11,13 +14,7 @@ import javax.lang.model.element.TypeElement;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
+import java.util.*;
 
 @AutoService(Processor.class)
 @SupportedAnnotationTypes(value = {"*"})
@@ -39,28 +36,23 @@ public class HtmlProcessor extends AbstractProcessor {
             Path out = Paths.get(path);
 
             try {
-//                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "PATH " + out.toString());
-                BufferedWriter writer = new BufferedWriter(new FileWriter(out.toFile()));
+                Configuration cfg = new Configuration(Configuration.VERSION_2_3_30);
+                cfg.setDirectoryForTemplateLoading(new File("src/main/resources"));
+                Template temp = cfg.getTemplate("template.ftl");
+                Map<String, Object> root = new HashMap<>();
+                Writer writer1 = new FileWriter("src/main/resources/result.html");
                 HtmlForm annotationForm = element.getAnnotation(HtmlForm.class);
-                writer.write("<form action=\"" + annotationForm.action() +
-                        "\" method=\"" + annotationForm.method() + "\">\n");
-
+                root.put("action", annotationForm.action());
+                root.put("method", annotationForm.method());
+                List<String> annotation = new ArrayList<>();
                 for (Element element1 :
                         annotatedFields) {
-                    try {
-                        HtmlInput annotation = element1.getAnnotation(HtmlInput.class);
-                        writer.write("\t<input type=\"" + annotation.type() +
-                                "\" name=\"" + annotation.name() +
-                                "\" placeholder=\"" + annotation.placeholder() +
-                                "\">\n");
-                    } catch (IOException e) {
-                        throw new IllegalArgumentException(e);
-                    }
+                    HtmlInput annotationElem = element1.getAnnotation(HtmlInput.class);
+                    annotation.add(annotationElem.toString().substring(annotationElem.toString().indexOf("(") + 1, annotationElem.toString().indexOf(")")).replaceAll(",",""));
                 }
-                writer.write("\t<input type=\"submit\" value=\"submit\"/>\n" +
-                        "</form>");
-                writer.close();
-            } catch (IOException e) {
+                root.put("annotation", annotation);
+                temp.process(root, writer1);
+            } catch (IOException | TemplateException e) {
                 throw new IllegalArgumentException(e);
             }
         }
