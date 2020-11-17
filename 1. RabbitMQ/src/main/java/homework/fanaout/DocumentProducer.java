@@ -26,11 +26,11 @@ public class DocumentProducer {
             // создаем exchange
             channel.exchangeDeclare(EXCHANGE_NAME, EXCHANGE_TYPE);
 
-            User user1 = new User("Ivan","Ivanov",12);
-            User user2 = new User( "Sergey","Sergeev",123123);
-            Gson json = new Gson();
-            channel.basicPublish(EXCHANGE_NAME, "", null, json.toJson(user1).getBytes());
-            channel.basicPublish(EXCHANGE_NAME, "", null, json.toJson(user2).getBytes());
+//          User user1 = new User("Ivan","Ivanov",12);
+//            User user2 = new User( "Sergey","Sergeev",123123);
+//            Gson json = new Gson();
+//            channel.basicPublish(EXCHANGE_NAME, "", null, json.toJson(user1).getBytes());
+//            channel.basicPublish(EXCHANGE_NAME, "", null, json.toJson(user2).getBytes());
 
         } catch (IOException | TimeoutException e) {
            throw new IllegalArgumentException(e);

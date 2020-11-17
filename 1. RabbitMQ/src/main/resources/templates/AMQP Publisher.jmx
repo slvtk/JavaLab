@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="RabbitMQ Test" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Fanaout Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">50</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <com.zeroclue.jmeter.protocol.amqp.AMQPPublisher guiclass="com.zeroclue.jmeter.protocol.amqp.gui.AMQPPublisherGui" testclass="com.zeroclue.jmeter.protocol.amqp.AMQPPublisher" testname="AMQP Users Publisher" enabled="true">
+          <stringProp name="AMQPSampler.Exchange">documents</stringProp>
+          <boolProp name="AMQPSampler.ExchangeDurable">false</boolProp>
+          <boolProp name="AMQPSampler.ExchangeAutoDelete">false</boolProp>
+          <boolProp name="AMQPSampler.ExchangeRedeclare">false</boolProp>
+          <stringProp name="AMQPSampler.Queue"></stringProp>
+          <stringProp name="AMQPSampler.RoutingKey"></stringProp>
+          <stringProp name="AMQPSampler.VirtualHost">/</stringProp>
+          <stringProp name="AMQPSampler.MessageTTL"></stringProp>
+          <stringProp name="AMQPSampler.MessageExpires"></stringProp>
+          <stringProp name="AMQPSampler.ExchangeType">fanout</stringProp>
+          <stringProp name="AMQPSampler.QueueDurable">false</stringProp>
+          <stringProp name="AMQPSampler.QueueExclusive">false</stringProp>
+          <stringProp name="AMQPSampler.QueueAutoDelete">false</stringProp>
+          <boolProp name="AMQPSampler.Redeclare">false</boolProp>
+          <stringProp name="AMQPSampler.Timeout">1000</stringProp>
+          <stringProp name="AMQPSampler.Iterations">1</stringProp>
+          <stringProp name="AMQPSampler.Host">localhost</stringProp>
+          <stringProp name="AMQPSampler.Port">5672</stringProp>
+          <stringProp name="AMQPSampler.Username">guest</stringProp>
+          <stringProp name="AMQPSampler.Password">guest</stringProp>
+          <stringProp name="AMQPSampler.SSL">false</stringProp>
+          <boolProp name="AMQPPublisher.Persistent">false</boolProp>
+          <boolProp name="AMQPPublisher.UseTx">false</boolProp>
+          <stringProp name="AMQPPublisher.MessageRoutingKey"></stringProp>
+          <stringProp name="AMQPPublisher.Message">{
+name :Name${__RandomString(5,abcdefg)},
+surname: Surname${__RandomString(5,abcdefg)} ,
+age: ${__Random(15,50)}
+}</stringProp>
+          <stringProp name="AMQPPublisher.MessageType"></stringProp>
+          <stringProp name="AMQPPublisher.ReplyToQueue"></stringProp>
+          <stringProp name="AMQPPublisher.CorrelationId"></stringProp>
+          <stringProp name="AMQPPublisher.ContentType"></stringProp>
+          <stringProp name="AMQPPublisher.MessageId"></stringProp>
+          <elementProp name="AMQPPublisher.Headers" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </com.zeroclue.jmeter.protocol.amqp.AMQPPublisher>
+        <hashTree/>
+        <com.zeroclue.jmeter.protocol.amqp.AMQPPublisher guiclass="com.zeroclue.jmeter.protocol.amqp.gui.AMQPPublisherGui" testclass="com.zeroclue.jmeter.protocol.amqp.AMQPPublisher" testname="AMQP PNG Publisher" enabled="true">
+          <stringProp name="AMQPSampler.Exchange">images</stringProp>
+          <boolProp name="AMQPSampler.ExchangeDurable">false</boolProp>
+          <boolProp name="AMQPSampler.ExchangeAutoDelete">false</boolProp>
+          <boolProp name="AMQPSampler.ExchangeRedeclare">false</boolProp>
+          <stringProp name="AMQPSampler.Queue"></stringProp>
+          <stringProp name="AMQPSampler.RoutingKey">png</stringProp>
+          <stringProp name="AMQPSampler.VirtualHost">/</stringProp>
+          <stringProp name="AMQPSampler.MessageTTL"></stringProp>
+          <stringProp name="AMQPSampler.MessageExpires"></stringProp>
+          <stringProp name="AMQPSampler.ExchangeType">direct</stringProp>
+          <stringProp name="AMQPSampler.QueueDurable">true</stringProp>
+          <stringProp name="AMQPSampler.QueueExclusive">false</stringProp>
+          <stringProp name="AMQPSampler.QueueAutoDelete">false</stringProp>
+          <boolProp name="AMQPSampler.Redeclare">false</boolProp>
+          <stringProp name="AMQPSampler.Timeout">1000</stringProp>
+          <stringProp name="AMQPSampler.Iterations">1</stringProp>
+          <stringProp name="AMQPSampler.Host">localhost</stringProp>
+          <stringProp name="AMQPSampler.Port">5672</stringProp>
+          <stringProp name="AMQPSampler.Username">guest</stringProp>
+          <stringProp name="AMQPSampler.Password">guest</stringProp>
+          <stringProp name="AMQPSampler.SSL">false</stringProp>
+          <boolProp name="AMQPPublisher.Persistent">false</boolProp>
+          <boolProp name="AMQPPublisher.UseTx">false</boolProp>
+          <stringProp name="AMQPPublisher.MessageRoutingKey">png</stringProp>
+          <stringProp name="AMQPPublisher.Message">https://${__RandomFromMultipleVars(png1|png2|png3|png4|png5)}</stringProp>
+          <stringProp name="AMQPPublisher.MessageType"></stringProp>
+          <stringProp name="AMQPPublisher.ReplyToQueue"></stringProp>
+          <stringProp name="AMQPPublisher.CorrelationId"></stringProp>
+          <stringProp name="AMQPPublisher.ContentType"></stringProp>
+          <stringProp name="AMQPPublisher.MessageId"></stringProp>
+          <elementProp name="AMQPPublisher.Headers" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </com.zeroclue.jmeter.protocol.amqp.AMQPPublisher>
+        <hashTree/>
+        <com.zeroclue.jmeter.protocol.amqp.AMQPPublisher guiclass="com.zeroclue.jmeter.protocol.amqp.gui.AMQPPublisherGui" testclass="com.zeroclue.jmeter.protocol.amqp.AMQPPublisher" testname="AMQP JPG Publisher" enabled="true">
+          <stringProp name="AMQPSampler.Exchange">images</stringProp>
+          <boolProp name="AMQPSampler.ExchangeDurable">false</boolProp>
+          <boolProp name="AMQPSampler.ExchangeAutoDelete">false</boolProp>
+          <boolProp name="AMQPSampler.ExchangeRedeclare">false</boolProp>
+          <stringProp name="AMQPSampler.Queue"></stringProp>
+          <stringProp name="AMQPSampler.RoutingKey">jpg</stringProp>
+          <stringProp name="AMQPSampler.VirtualHost">/</stringProp>
+          <stringProp name="AMQPSampler.MessageTTL"></stringProp>
+          <stringProp name="AMQPSampler.MessageExpires"></stringProp>
+          <stringProp name="AMQPSampler.ExchangeType">direct</stringProp>
+          <stringProp name="AMQPSampler.QueueDurable">true</stringProp>
+          <stringProp name="AMQPSampler.QueueExclusive">false</stringProp>
+          <stringProp name="AMQPSampler.QueueAutoDelete">false</stringProp>
+          <boolProp name="AMQPSampler.Redeclare">false</boolProp>
+          <stringProp name="AMQPSampler.Timeout">1000</stringProp>
+          <stringProp name="AMQPSampler.Iterations">1</stringProp>
+          <stringProp name="AMQPSampler.Host">localhost</stringProp>
+          <stringProp name="AMQPSampler.Port">5672</stringProp>
+          <stringProp name="AMQPSampler.Username">guest</stringProp>
+          <stringProp name="AMQPSampler.Password">guest</stringProp>
+          <stringProp name="AMQPSampler.SSL">false</stringProp>
+          <boolProp name="AMQPPublisher.Persistent">false</boolProp>
+          <boolProp name="AMQPPublisher.UseTx">false</boolProp>
+          <stringProp name="AMQPPublisher.MessageRoutingKey">jpg</stringProp>
+          <stringProp name="AMQPPublisher.Message">https://${__RandomFromMultipleVars(jpg1|jpg2|jpg3|jpg4|jpg5)}</stringProp>
+          <stringProp name="AMQPPublisher.MessageType"></stringProp>
+          <stringProp name="AMQPPublisher.ReplyToQueue"></stringProp>
+          <stringProp name="AMQPPublisher.CorrelationId"></stringProp>
+          <stringProp name="AMQPPublisher.ContentType"></stringProp>
+          <stringProp name="AMQPPublisher.MessageId"></stringProp>
+          <elementProp name="AMQPPublisher.Headers" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </com.zeroclue.jmeter.protocol.amqp.AMQPPublisher>
+        <hashTree/>
+        <com.zeroclue.jmeter.protocol.amqp.AMQPPublisher guiclass="com.zeroclue.jmeter.protocol.amqp.gui.AMQPPublisherGui" testclass="com.zeroclue.jmeter.protocol.amqp.AMQPPublisher" testname="AMQPAdultPublisher" enabled="true">
+          <stringProp name="AMQPSampler.Exchange">users</stringProp>
+          <boolProp name="AMQPSampler.ExchangeDurable">false</boolProp>
+          <boolProp name="AMQPSampler.ExchangeAutoDelete">false</boolProp>
+          <boolProp name="AMQPSampler.ExchangeRedeclare">false</boolProp>
+          <stringProp name="AMQPSampler.Queue"></stringProp>
+          <stringProp name="AMQPSampler.RoutingKey">users.adult</stringProp>
+          <stringProp name="AMQPSampler.VirtualHost">/</stringProp>
+          <stringProp name="AMQPSampler.MessageTTL"></stringProp>
+          <stringProp name="AMQPSampler.MessageExpires"></stringProp>
+          <stringProp name="AMQPSampler.ExchangeType">topic</stringProp>
+          <stringProp name="AMQPSampler.QueueDurable">true</stringProp>
+          <stringProp name="AMQPSampler.QueueExclusive">false</stringProp>
+          <stringProp name="AMQPSampler.QueueAutoDelete">false</stringProp>
+          <boolProp name="AMQPSampler.Redeclare">false</boolProp>
+          <stringProp name="AMQPSampler.Timeout">1000</stringProp>
+          <stringProp name="AMQPSampler.Iterations">1</stringProp>
+          <stringProp name="AMQPSampler.Host">localhost</stringProp>
+          <stringProp name="AMQPSampler.Port">5672</stringProp>
+          <stringProp name="AMQPSampler.Username">guest</stringProp>
+          <stringProp name="AMQPSampler.Password">guest</stringProp>
+          <stringProp name="AMQPSampler.SSL">false</stringProp>
+          <boolProp name="AMQPPublisher.Persistent">false</boolProp>
+          <boolProp name="AMQPPublisher.UseTx">false</boolProp>
+          <stringProp name="AMQPPublisher.MessageRoutingKey">users.adult</stringProp>
+          <stringProp name="AMQPPublisher.Message">{
+name :Name${__RandomString(5,abcdefg)},
+surname: Surname${__RandomString(5,abcdefg)} ,
+age: ${__Random(18,50)}
+}</stringProp>
+          <stringProp name="AMQPPublisher.MessageType"></stringProp>
+          <stringProp name="AMQPPublisher.ReplyToQueue"></stringProp>
+          <stringProp name="AMQPPublisher.CorrelationId"></stringProp>
+          <stringProp name="AMQPPublisher.ContentType"></stringProp>
+          <stringProp name="AMQPPublisher.MessageId"></stringProp>
+          <elementProp name="AMQPPublisher.Headers" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </com.zeroclue.jmeter.protocol.amqp.AMQPPublisher>
+        <hashTree/>
+        <com.zeroclue.jmeter.protocol.amqp.AMQPPublisher guiclass="com.zeroclue.jmeter.protocol.amqp.gui.AMQPPublisherGui" testclass="com.zeroclue.jmeter.protocol.amqp.AMQPPublisher" testname="AMQPTeenPublisher" enabled="true">
+          <stringProp name="AMQPSampler.Exchange">users</stringProp>
+          <boolProp name="AMQPSampler.ExchangeDurable">false</boolProp>
+          <boolProp name="AMQPSampler.ExchangeAutoDelete">false</boolProp>
+          <boolProp name="AMQPSampler.ExchangeRedeclare">false</boolProp>
+          <stringProp name="AMQPSampler.Queue"></stringProp>
+          <stringProp name="AMQPSampler.RoutingKey">users.teen</stringProp>
+          <stringProp name="AMQPSampler.VirtualHost">/</stringProp>
+          <stringProp name="AMQPSampler.MessageTTL"></stringProp>
+          <stringProp name="AMQPSampler.MessageExpires"></stringProp>
+          <stringProp name="AMQPSampler.ExchangeType">topic</stringProp>
+          <stringProp name="AMQPSampler.QueueDurable">true</stringProp>
+          <stringProp name="AMQPSampler.QueueExclusive">false</stringProp>
+          <stringProp name="AMQPSampler.QueueAutoDelete">false</stringProp>
+          <boolProp name="AMQPSampler.Redeclare">false</boolProp>
+          <stringProp name="AMQPSampler.Timeout">1000</stringProp>
+          <stringProp name="AMQPSampler.Iterations">1</stringProp>
+          <stringProp name="AMQPSampler.Host">localhost</stringProp>
+          <stringProp name="AMQPSampler.Port">5672</stringProp>
+          <stringProp name="AMQPSampler.Username">guest</stringProp>
+          <stringProp name="AMQPSampler.Password">guest</stringProp>
+          <stringProp name="AMQPSampler.SSL">false</stringProp>
+          <boolProp name="AMQPPublisher.Persistent">false</boolProp>
+          <boolProp name="AMQPPublisher.UseTx">false</boolProp>
+          <stringProp name="AMQPPublisher.MessageRoutingKey">users.teen</stringProp>
+          <stringProp name="AMQPPublisher.Message">{
+name :Name${__RandomString(5,abcdefg)},
+surname: Surname${__RandomString(5,abcdefg)} ,
+age: ${__Random(1,18)}
+}</stringProp>
+          <stringProp name="AMQPPublisher.MessageType"></stringProp>
+          <stringProp name="AMQPPublisher.ReplyToQueue"></stringProp>
+          <stringProp name="AMQPPublisher.CorrelationId"></stringProp>
+          <stringProp name="AMQPPublisher.ContentType"></stringProp>
+          <stringProp name="AMQPPublisher.MessageId"></stringProp>
+          <elementProp name="AMQPPublisher.Headers" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </com.zeroclue.jmeter.protocol.amqp.AMQPPublisher>
+        <hashTree/>
+        <Arguments guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="png1" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">www.besaport.ru/images/09/smiliki/smailik1.png</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">png1</stringProp>
+            </elementProp>
+            <elementProp name="png2" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">img.lovepik.com/original_origin_pic/19/01/13/64e28f15e95a97a41ec796843dc331ad.png_wh860.png</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">png2</stringProp>
+            </elementProp>
+            <elementProp name="png3" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">w7.pngwing.com/pngs/384/632/png-transparent-skull-decal-sticker-human-head-drawing-skull.png</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">png3</stringProp>
+            </elementProp>
+            <elementProp name="png4" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">pngicon.ru/file/uploads/vinni-pukh-v-png.png</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">png4</stringProp>
+            </elementProp>
+            <elementProp name="png5" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/274px-PNG_transparency_demonstration_1.png</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">png5</stringProp>
+            </elementProp>
+            <elementProp name="jpg1" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">sun9-61.userapi.com/B4eaS6wjK3ljSBgRM5eLv17BNRUG6_OUCi28rg/wgSnUfzDjEU.jpg</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">jpg1</stringProp>
+            </elementProp>
+            <elementProp name="jpg2" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">sun9-36.userapi.com/1oSsc3uI7xKXDbF_WpqHjA1-TNAl8lkK7Tk7-g/v5eZ9Y37ZxQ.jpg</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">jpg2</stringProp>
+            </elementProp>
+            <elementProp name="jpg3" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">sun9-44.userapi.com/t8Pgn7bic_MzT-DK1CU9JCzpOmBcGFDMpZmHXg/8kqRr4ivTl0.jpg</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">jpg3</stringProp>
+            </elementProp>
+            <elementProp name="jpg4" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">sun9-70.userapi.com/8Ism5SSAgKyc6lnVtfv0XwKpBt8b03t5A4br3Q/42hVP-7tLvw.jpg</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">jpg4</stringProp>
+            </elementProp>
+            <elementProp name="jpg5" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">sun9-33.userapi.com/gLRFFDRte2DbSH50PgC42SjroQ8sEpvnb618Tg/9F8K1jf3H5A.jpg</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">jpg5</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
